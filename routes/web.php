@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/products', ProductController::class)->except(['show']);
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('show');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
