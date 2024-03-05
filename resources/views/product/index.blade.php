@@ -6,7 +6,7 @@
     <ul class="list-group">
         @foreach ($products as $product)
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <img class="me-3" src="{{ asset('storage/' . (isset($product->image) ? $product->image : 'default.jpg')) }}" width="60px">
+            <img class="me-3" src="{{ asset('storage/' . ($product->images->isNotEmpty() ? $product->images->first()->path : 'default.jpg')) }}" width="60px">
             <a href="{{ route('show', $product->id) }}">
             <span class="align-middle">{{ $product->name }}</span>
             </a>
