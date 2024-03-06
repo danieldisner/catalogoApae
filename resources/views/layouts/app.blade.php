@@ -7,8 +7,7 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @vite(['resources/sass/app.scss', 'resources/sass/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.css'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -17,7 +16,7 @@
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow-sm">
-                    <div class="container py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="container px-4 py-6 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
@@ -40,7 +39,7 @@
             @endif
             <!-- Page Content -->
             <main>
-                <div class="container py-6 px-4 sm:px-6 lg:px-8">
+                <div class="container px-4 py-6 sm:px-6 lg:px-8">
                     {{ $slot }}
                 </div>
             </main>

@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import  path from 'path';
 
 export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
+                'resources/css/tailwind.css',
+                'resources/css/app.css',
                 'resources/js/app.js',
             ],
             refresh: true,
@@ -13,7 +15,9 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '$': 'jQuery'
+            '@': '/resources/js',
+            '~bootstrap': path.resolve(__dirname,"node_modules/bootstrap/dist"),
+            '$': 'jQuery',
         },
     },
 });
