@@ -22,9 +22,9 @@
                 </header>
             @endif
 
-            @isset($mensagemSucesso)
+            @isset($success)
                 <div class="alert alert-success">
-                    {{ $mensagemSucesso }}
+                    {{ $success }}
                 </div>
             @endisset
 

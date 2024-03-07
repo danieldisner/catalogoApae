@@ -51,9 +51,12 @@
             </li>
         @endforeach
     </ul>
+    <ul>
+        {{ $products->links() }}
+    </ul>
     @guest
     <ul>
-        <button onclick="sendCartToWhatsApp()" class="btn btn-success btn-sm w-100 align-items-center d-flex justify-content-center">
+        <button onclick="sendCartToWhatsApp()" class="btn btn-success btn-sm w-100 align-items-center d-flex justify-content-center buyButton" disabled>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart-fill me-2" viewBox="0 0 16 16">
                 <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
             </svg>
@@ -68,18 +71,24 @@
 </x-pp>
 
 <script>
-
-    let cart = []; // Declaração global da variável cart
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     function sendCartToWhatsApp() {
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         // Número do WhatsApp da pessoa
-        var phoneNumber = '5514981000458';
+        var phoneNumber = '5547997455910';
 
         // Construa a mensagem a ser enviada para o WhatsApp
         var message = "Olá, gostaria de fazer um pedido. Aqui estão os itens:\n";
+
+        var TotalPrice = 0;
         cart.forEach(function(item) {
-            message += 'Codigo: ' + item.id + ' ' + item.name + " - R$" + item.price + "\n";
+            message += item.quantity + ' ' + item.name + " - R$" + item.price + "\n";
+            TotalPrice += item.price;
         });
+        message += 'Total da Compra: *R$' + TotalPrice + '*';
 
         // URL do WhatsApp com a mensagem e o número do WhatsApp
         var whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
@@ -95,13 +104,15 @@
         if (index !== -1) {
             // Se o produto já estiver no carrinho, aumente a quantidade e atualize o preço total
             cart[index].quantity++;
-            cart[index].totalPrice *= cart[index].quantity;
+            cart[index].totalPrice = cart[index].quantity * cart[index].price;
         } else {
             // Se o produto ainda não estiver no carrinho, adicione-o
             cart.push({ id: productId, name: productName, price: price, quantity: 1, totalPrice: price });
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
+        // Habilitar o botão de comprar após adicionar um item ao carrinho
+        $('.buyButton').prop('disabled', false);
         listCart();
     }
 
@@ -117,7 +128,7 @@
             // Se houver mais de um item desse produto no carrinho, diminua a quantidade
             if (quantity > 1) {
                 cart[index].quantity--;
-                cart[index].totalPrice -= price;
+                cart[index].totalPrice = cart[index].quantity * cart[index].price;
             } else {
                 // Se houver apenas um item desse produto no carrinho, remova-o completamente
                 cart.splice(index, 1);
