@@ -16,10 +16,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': '/resources/js',
-            '~bootstrap': path.resolve(__dirname,"node_modules/bootstrap/dist"),
-            '$': 'jQuery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery'
+            '~bootstrap': path.resolve(__dirname,"node_modules/bootstrap/dist")
         },
     },
 });
