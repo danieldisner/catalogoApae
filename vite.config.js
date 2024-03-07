@@ -18,6 +18,8 @@ export default defineConfig({
             '@': '/resources/js',
             '~bootstrap': path.resolve(__dirname,"node_modules/bootstrap/dist"),
             '$': 'jQuery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
         },
     },
 });
