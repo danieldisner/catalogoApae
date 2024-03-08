@@ -80,6 +80,8 @@
     function checkCartEmpty() {
         if (cart.length === 0) {
             document.querySelector('.buyButton').disabled = true;
+        } else {
+            document.querySelector('.buyButton').disabled = false;
         }
     }
 
