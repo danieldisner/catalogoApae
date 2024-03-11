@@ -50,7 +50,7 @@ services:
         image: composer:latest
         container_name: composer
         volumes:
-            - ./src:/var/www/html
+            - ./:/var/www/html
         working_dir: /var/www/html
         networks:
             - laravel
@@ -61,7 +61,7 @@ services:
             dockerfile: php.dockerfile
         container_name: artisan
         volumes:
-            - ./src:/var/www/html
+            - ./:/var/www/html
         working_dir: /var/www/html
         entrypoint: ["php", "artisan"]
         networks:
@@ -71,7 +71,7 @@ services:
         image: node:current-alpine
         container_name: npm
         volumes:
-            - ./src:/var/www/html
+            - ./:/var/www/html
         working_dir: /var/www/html
         entrypoint: ["npm"]
         networks:
