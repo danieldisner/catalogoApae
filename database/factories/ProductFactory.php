@@ -1,30 +1,44 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
- */
 class ProductFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Product::class;
+
+    public function definition()
     {
-        $productName = $this->faker->unique()->words(3, true);
+        $productName = $this->faker->randomElement([
+            'Camiseta',
+            'Calça',
+            'Tênis',
+            'Jaqueta',
+            'Bermuda',
+        ]) . ' ' . $this->faker->unique()->word(); // Adiciona uma palavra aleatória para tornar o nome mais único
+
         $price = $this->faker->randomFloat(2, 10, 500);
         $description = $this->faker->paragraph(3);
 
-        return [
+        $product = Product::create([
             'name' => ucfirst($productName),
             'price' => $price,
             'description' => $description,
-        ];
+        ]);
+
+        // Criar imagens e associá-las ao produto
+        $imageIds = Image::factory()->count(rand(1, 5))->create()->pluck('id')->toArray();
+        $product->images()->sync($imageIds);
+
+        return $product->toArray();
     }
+
+    public function configure()
+{
+    return $this->afterCreating(function (Product $product) {
+        $product->images()->saveMany(Image::factory()->count(rand(1, 5))->make());
+    });
+}
 }
