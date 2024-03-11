@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ImageOpenAIController;
 
 
 /*
@@ -15,6 +16,11 @@ use App\Http\Controllers\ProductController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::post('/generate-image', [ImageOpenAIController::class, 'generate'])->name('image.generate');
+
+Route::get('/generate-image', function () {
+    return view('image.generate');
+})->name('image.generate');
 
 Route::get('/', function () {
     return view('welcome');
