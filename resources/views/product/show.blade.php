@@ -80,8 +80,19 @@
             <div class="col-md-6">
                 <h2><strong>{{ $product->name }}</strong></h2>
                 <p class="lead">{{ $product->description }}</p>
-                <p><strong>Price:</strong> ${{ $product->price }}</p>
+                <p><strong>Preço:</strong> ${{ $product->price }}</p>
                 <!-- Add more details here if needed -->
+                @guest
+                <span class="d-flex justify-content-center align-items-center">
+                    <button onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})" class="btn btn-success btn-sm">
+                        Adicionar
+                    </button>
+                    <button onclick="removeFromCart({{ $product->id }})" class="btn btn-danger btn-sm ms-2">
+                        Remover
+                    </button>
+                </span>
+                <x-fake-cart class="mt-4"/>
+                @endguest
             </div>
         </div>
     </div>

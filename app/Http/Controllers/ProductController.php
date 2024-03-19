@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::with('images')->paginate(15);
+        $products = Product::with('images')->paginate(Auth::check() ? 20 : 6);
         $mensagemSucesso = session('mensagem.sucesso');
 
         return view('product.index')->with('products', $products)

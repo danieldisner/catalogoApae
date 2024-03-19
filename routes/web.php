@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ImageOpenAIController;
 
+use function Pest\Laravel\get;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +23,7 @@ Route::get('/generate-image', function () {
     return view('image.generate');
 })->name('image.generate');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::resource('/products', ProductController::class)->except(['show']);
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('show');
 
