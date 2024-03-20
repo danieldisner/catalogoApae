@@ -68,10 +68,10 @@
         var message = "Olá, gostaria de fazer um pedido. Aqui estão os itens:\n";
         var TotalPrice = 0;
         cart.forEach(function(item) {
-            message += item.quantity + ' ' + item.name + " - R$" + item.price + "\n";
-            TotalPrice += item.price;
+            message += item.quantity + ' ' + item.name + " - " + item.totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + "\n";
+            TotalPrice += item.totalPrice;
         });
-        message += 'Total da Compra: *R$' + TotalPrice + '*';
+        message += 'Total da Compra: *' + TotalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '*';
         var whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
         window.location.href = whatsappURL;
     }
@@ -124,7 +124,7 @@
         cart.forEach(item => {
             let listItem = document.createElement('li');
             listItem.className = 'list-group-item';
-            listItem.textContent = `Quantidade ${item.quantity} - ${item.name}  : ${item.totalPrice}`;
+            listItem.textContent = `Quantidade ${item.quantity} - ${item.name}  : ${item.totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
             cartList.appendChild(listItem);
         });
         document.getElementById('cartCount').innerHTML = cart.length == 0 ? '' : ' (' + cart.length + ') ';

@@ -7,7 +7,7 @@
         @csrf
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{{ route('products.show', $product->id) }}" class="link-underline-light">
-                    <img class="me-3" src="{{ asset('storage/' . ($product->images->isNotEmpty() ? $product->images->first()->path : 'default.jpg')) }}" width="60px">
+                    <img class="me-3" src="{{ asset('storage/' . ($product->images->isNotEmpty() ? $product->images->first()->path : 'images/default.png')) }}" width="60px">
                 </a>
                 <a href="{{ route('products.show', $product->id) }}" class="link-underline-light">
                     <span class="align-middle">{{ $product->name }}</span>

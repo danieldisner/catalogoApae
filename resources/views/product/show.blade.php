@@ -77,10 +77,10 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <h2><strong>{{ $product->name }}</strong></h2>
                 <p class="lead">{{ $product->description }}</p>
-                <p><strong>Preço:</strong> ${{ $product->price }}</p>
+                <p><strong>Preço:</strong> {{  money($product->price,'BRL') }}</p>
                 <!-- Add more details here if needed -->
                 @guest
                 <span class="d-flex justify-content-center align-items-center">

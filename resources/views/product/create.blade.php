@@ -12,7 +12,7 @@
                         </div>
                         <div class="w-full md:w-1/2 md:pl-2">
                             <label for="price" class="block mb-2 text-sm font-bold text-gray-700">Price:</label>
-                            <input type="number" id="price" name="price" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline" step="0.01" required>
+                            <input type="number" id="price" name="price" class="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline" step="0.01" min="0.01" required>
                         </div>
                     </div>
                     <div class="mb-4">
