@@ -30,6 +30,13 @@ class ProductController extends Controller
         return view('product.create');
     }
 
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        $images = $product->images;
+        return view('product.edit')->with('product', $product)->with('images', $images);
+    }
+
     public function store(Request $request)
     {
         // Validate the incoming request data
@@ -62,6 +69,37 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
+    public function update(Request $request, Product $product)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image separately
+        ]);
+
+        // Update the product
+        $product->update([
+            'name' => $validatedData['name'],
+            'price' => $validatedData['price'],
+            'description' => $validatedData['description'],
+        ]);
+
+        // Handle product images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                // Store each image
+                $path = $image->store('images', 'public');
+                // Create image record in the database
+                $product->images()->create(['path' => $path]);
+            }
+        }
+
+        // Redirect back with success message
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+    }
+
     public function destroy($id)
     {
         // Find the product by its ID
@@ -69,7 +107,7 @@ class ProductController extends Controller
 
         // Delete the images associated with the product
         foreach ($product->images as $image) {
-            if (Storage::disk('public')->exists($image->path)) {
+            if (Storage::disk('public')->exists($image->path) && $image->path !== '/images/default.png') {
                 Storage::disk('public')->delete($image->path);
             }
             // Delete image from database

@@ -24,7 +24,8 @@ Route::get('/generate-image', function () {
 })->name('image.generate');
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
-Route::resource('/products', ProductController::class)->except(['show']);
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('show');
 
 

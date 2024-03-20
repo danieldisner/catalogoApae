@@ -4,14 +4,15 @@
     @endauth
     <ul class="list-group">
         @foreach ($products as $product)
+        @csrf
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('show', $product->id) }}" class="link-underline-light">
+                <a href="{{ route('products.show', $product->id) }}" class="link-underline-light">
                     <img class="me-3" src="{{ asset('storage/' . ($product->images->isNotEmpty() ? $product->images->first()->path : 'default.jpg')) }}" width="60px">
                 </a>
-                <a href="{{ route('show', $product->id) }}" class="link-underline-light">
+                <a href="{{ route('products.show', $product->id) }}" class="link-underline-light">
                     <span class="align-middle">{{ $product->name }}</span>
                 </a>
-                <a href="{{ route('show', $product->id) }}" class="link-underline-light">
+                <a href="{{ route('products.show', $product->id) }}" class="link-underline-light">
                     <span class="d-flex"><strong>{{ money($product->price,'BRL') }}</strong></span>
                 </a>
                 @auth
@@ -49,6 +50,7 @@
                 </span>
                 @endguest
             </li>
+            @csrf
         @endforeach
     </ul>
     <ul>
